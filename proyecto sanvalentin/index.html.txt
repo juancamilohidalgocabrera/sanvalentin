@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>San Valentín 💘</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0px 10px 25px rgba(0,0,0,0.2);
+      max-width: 550px;
+      width: 90%;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #d1005d;
+      margin-bottom: 20px;
+    }
+
+    #imgLove {
+      width: 250px;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 4px solid #ff4fa3;
+      box-shadow: 0px 5px 15px rgba(0,0,0,0.15);
+      margin-bottom: 20px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+      position: relative;
+      height: 90px;
+      align-items: center;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 18px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    #yesBtn {
+      background: #ff2d8a;
+      color: white;
+      font-weight: bold;
+      z-index: 2;
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.1);
+      background: #ff006f;
+    }
+
+    #noBtn {
+      background: #444;
+      color: white;
+      font-weight: bold;
+      position: absolute;
+      right: 0;
+      z-index: 1;
+    }
+
+    #messageFinal {
+      display: none;
+      font-size: 22px;
+      font-weight: bold;
+      color: #d1005d;
+      margin-top: 20px;
+    }
+
+    #counter {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 24px;
+      animation: floatUp 4s linear forwards;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-700px) scale(1.8);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>
+      Mi amor, mi vida, ¿serás mi San Valentín pulguita ❣️ y compartiremos un día lleno de amor y felicidad?
+    </h1>
+
+    <img id="imgLove" src="images/perrito.png" alt="Imagen romántica">
+
+    <div class="buttons">
+      <button id="yesBtn">Sí 💖</button>
+      <button id="noBtn">No 😒</button>
+    </div>
+
+    <div id="counter">Intentos de NO: 0 / 5</div>
+
+    <div id="messageFinal">
+      Sabía que dirías que sí, pulguita ❣️ <br>
+      Te amo con todo mi corazón 😍❤️
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const messageFinal = document.getElementById("messageFinal");
+    const counter = document.getElementById("counter");
+    const imgLove = document.getElementById("imgLove");
+
+    let noCount = 0;
+    let yesScale = 1;
+
+    const imagesNo = [
+      "images/perrito.png",
+      "images/ardillas.png",
+      "images/ardillas_beso.png",
+      "images/gatos.png",
+      "images/pinguino.png"
+    ];
+
+    noBtn.addEventListener("mouseover", () => {
+      if (noCount >= 5) return;
+
+      imgLove.src = imagesNo[noCount];
+
+      noCount++;
+      counter.textContent = "Intentos de NO: " + noCount + " / 5";
+
+      let x = Math.random() * 250 - 120;
+      let y = Math.random() * 180 - 90;
+      noBtn.style.transform = "translate(" + x + "px, " + y + "px)";
+
+      yesScale += 0.35;
+      yesBtn.style.transform = "scale(" + yesScale + ")";
+
+      if (noCount >= 5) {
+        noBtn.disabled = true;
+        noBtn.style.background = "#999";
+        noBtn.style.cursor = "not-allowed";
+        noBtn.textContent = "Ya no 😏";
+        counter.textContent = "Ya no puedes decir que no 😌💖";
+
+        yesBtn.style.transform = "scale(3)";
+      }
+    });
+
+    yesBtn.addEventListener("click", () => {
+      imgLove.src = "images/nosotros.jpg";
+      messageFinal.style.display = "block";
+      createHearts();
+    });
+
+    function createHearts() {
+      for (let i = 0; i < 45; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.textContent = "💖";
+
+        heart.style.left = (Math.random() * window.innerWidth) + "px";
+        heart.style.fontSize = (Math.random() * 25 + 15) + "px";
+        heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+      }
+    }
+  </script>
+
+</body>
+</html>
